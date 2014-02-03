@@ -1,0 +1,7 @@
+name: HermesMarketPlugin
+main: dougrich.dev.mc.hermes.MarketPlugin
+version: 0.0.1
+commands:
+   shop:
+      description: Turns the sign that the player is currently looking at into a sale sign
+      usage: /shop help
