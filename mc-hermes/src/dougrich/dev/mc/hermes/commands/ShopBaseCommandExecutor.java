@@ -56,6 +56,18 @@ public class ShopBaseCommandExecutor implements CommandExecutor {
             /*
              * case "something": executor = new whatever(); break;
              */
+                case "purse":
+                    executor = new ShopPurseExecutor();
+                    break;
+                case "list":
+                    executor = new ShopListExecutor();
+                    break;
+                case "buy":
+                    executor = new ShopBuyExecutor();
+                    break;
+                case "sell":
+                    executor = new ShopSellExecutor();
+                    break;
                 case "help":
                 default:
                     executor = new ShopHelpExecutor();
