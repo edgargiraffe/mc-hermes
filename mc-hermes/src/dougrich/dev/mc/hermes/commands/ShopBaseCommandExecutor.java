@@ -65,6 +65,7 @@ public class ShopBaseCommandExecutor implements CommandExecutor {
 		ShopExecutorArgs localargs = executor.TryGetArgs(sender, cmd, label, args);
 		if(localargs == null) {
 			executor = new ShopHelpExecutor();
+			localargs = executor.TryGetArgs(sender, cmd, label, args);
 		}
 		
 		executor.HandleCommand(localargs);
@@ -73,7 +74,9 @@ public class ShopBaseCommandExecutor implements CommandExecutor {
 	}
 	
 	protected ShopExecutorArgs TryGetArgs(CommandSender sender, Command cmd, String label, String[] args) {
-		return null;
+		ShopExecutorArgs parsedargs = new ShopExecutorArgs();
+		parsedargs.sender = sender;
+		return parsedargs;
 	}
 	
 	protected boolean HandleCommand(ShopExecutorArgs e) {
