@@ -1,16 +1,83 @@
 package dougrich.dev.mc.hermes.commands;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 
 public class ShopBaseCommandExecutor implements CommandExecutor {
 
-	public boolean onCommand(CommandSender arg0, Command arg1, String arg2, String[] arg3) {
+	protected enum ShopCommandType {
+		HELP
+	}
+	
+	protected class ShopExecutorArgs {
+		public CommandSender sender;
+		public ShopCommandType commandtype;
+	}
+	
+	final public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 		//validate arguments & switch to appropriate command
 		
+		//preprocess args: this changes it so that any commands in quotes with spaces work properly
+		//i.e. /shop add "ginger cow" has args "add", "ginger cow", not "add", "\"ginger", "cow\""
+		List<String> strings = new ArrayList<String>();
+		String currentstring = "";
+		for(int i = 0; i < args.length; i++) {
+			if(args[i].startsWith("\"") && !(args[i].endsWith("\"") && args[i].length() > 1)) {
+				currentstring = args[i].toString();
+				for(i++; i < args.length; i++) {
+					currentstring = currentstring.concat(" ");
+					currentstring = currentstring.concat(args[i]);
+					if(currentstring.endsWith("\"")) {
+						currentstring = currentstring.replace('"', ' ').trim();
+						break;
+					}
+				}
+				strings.add(currentstring);
+			}
+			else {
+				strings.add(args[i].replace('"', ' ').trim());
+			}
+		}
+		args = new String[strings.size()];
+		strings.toArray(args);
+		
+		ShopBaseCommandExecutor executor = null;
+		
+		if(args.length > 0) {
+			switch(args[0]) {
+			/*case "something":
+				executor = new whatever();
+				break;*/
+			case "help":
+			default:
+				executor = new ShopHelpExecutor();
+				break;
+			}
+		}
+		else {
+			executor = new ShopHelpExecutor();
+		}
+		
+		ShopExecutorArgs localargs = executor.TryGetArgs(sender, cmd, label, args);
+		if(localargs == null) {
+			executor = new ShopHelpExecutor();
+		}
+		
+		executor.HandleCommand(localargs);
 		
 		return true;
+	}
+	
+	protected ShopExecutorArgs TryGetArgs(CommandSender sender, Command cmd, String label, String[] args) {
+		return null;
+	}
+	
+	protected boolean HandleCommand(ShopExecutorArgs e) {
+		return false;
 	}
 
 }
