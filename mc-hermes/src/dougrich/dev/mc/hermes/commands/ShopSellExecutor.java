@@ -1,5 +1,6 @@
 package dougrich.dev.mc.hermes.commands;
 
+import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -54,8 +55,27 @@ public class ShopSellExecutor extends ShopBaseCommandExecutor {
             return false;
         }
 
+        final ShopSellExecutorArgs args = (ShopSellExecutorArgs) e;
+        final Player player = (Player) args.sender;
+
         // TODO: implement buy command.
-        e.sender.sendMessage("TODO: implement sell command");
+        player.sendMessage("TODO: implement sell command.");
+        player.sendMessage("currently removing item from inventory.");
+
+        if(args.type == SellType.HELD) {
+            player.setItemInHand(null);
+        }
+        else {
+            final Material material = Material.getMaterial(args.item);
+            if(material == null) {
+                // invalid material name
+                return false;
+            }
+
+            // Removes all items of this material from the player's inventory.
+            player.getInventory().remove(material);
+        }
+
         return true;
     }
 }
