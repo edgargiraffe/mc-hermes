@@ -16,7 +16,7 @@ public class ShopListExecutor extends ShopBaseCommandExecutor {
             return null;
         }
 
-        if(args[0].equalsIgnoreCase("list")) {
+        if(!args[0].equalsIgnoreCase("list")) {
             // This is not the list command.
             return null;
         }
