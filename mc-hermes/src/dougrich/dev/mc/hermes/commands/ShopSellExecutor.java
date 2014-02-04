@@ -4,6 +4,8 @@ import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
 
 public class ShopSellExecutor extends ShopBaseCommandExecutor {
 
@@ -62,10 +64,11 @@ public class ShopSellExecutor extends ShopBaseCommandExecutor {
         player.sendMessage("currently removing item from inventory.");
 
         if(args.type == SellType.HELD) {
+            player.sendMessage("Removing " + player.getItemInHand().getAmount() + " items from the player's hand.");
             player.setItemInHand(null);
         }
         else {
-        	
+
             final Material material = Material.matchMaterial(args.item);
             if(material == null) {
                 // invalid material name
@@ -73,9 +76,22 @@ public class ShopSellExecutor extends ShopBaseCommandExecutor {
             }
 
             // Removes all items of this material from the player's inventory.
+            player.sendMessage("Removing " + getNumberOfItemsInInventory(player.getInventory(), material) + " items from the player's inventory.");
             player.getInventory().remove(material);
         }
 
         return true;
+    }
+
+    private int getNumberOfItemsInInventory(final Inventory inventory, final Material material) {
+        int count = 0;
+
+        for(final ItemStack itemStack : inventory.getContents()) {
+            if(itemStack != null && itemStack.getType() == material) {
+                count += itemStack.getAmount();
+            }
+        }
+
+        return count;
     }
 }
