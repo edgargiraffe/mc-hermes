@@ -23,7 +23,7 @@ public class ShopSellExecutor extends ShopBaseCommandExecutor {
             return null;
         }
 
-        if(args[0].equalsIgnoreCase("sell")) {
+        if(!args[0].equalsIgnoreCase("sell")) {
             // This is not the buy command.
             return null;
         }
