@@ -12,7 +12,7 @@ public class ShopPurseExecutor extends ShopBaseCommandExecutor {
             return null;
         }
 
-        if(args.length == 1 && args[0].equalsIgnoreCase("purse")) {
+        if(!(args.length == 1 && args[0].equalsIgnoreCase("purse"))) {
             // This is not the purse command.
             return null;
         }

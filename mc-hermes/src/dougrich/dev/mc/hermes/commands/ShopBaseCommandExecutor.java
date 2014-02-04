@@ -9,17 +9,8 @@ import org.bukkit.command.CommandSender;
 
 public class ShopBaseCommandExecutor implements CommandExecutor {
 
-    protected enum ShopCommandType {
-        HELP,
-        PURSE,
-        LIST,
-        BUY,
-        SELL
-    }
-
     protected class ShopExecutorArgs {
         public CommandSender sender;
-        public ShopCommandType commandtype;
     }
 
     final public boolean onCommand(final CommandSender sender, final Command cmd, final String label, String[] args) {
