@@ -31,7 +31,6 @@ public class ShopSellExecutor extends ShopBaseCommandExecutor {
         // Success case; create buy command parsed arguments and return.
         final ShopSellExecutorArgs parsedArgs = new ShopSellExecutorArgs();
         parsedArgs.sender = sender;
-        parsedArgs.commandtype = ShopCommandType.SELL;
 
         if(args[1].equalsIgnoreCase("held")) {
             parsedArgs.type = SellType.HELD;
@@ -66,7 +65,8 @@ public class ShopSellExecutor extends ShopBaseCommandExecutor {
             player.setItemInHand(null);
         }
         else {
-            final Material material = Material.getMaterial(args.item);
+        	
+            final Material material = Material.matchMaterial(args.item);
             if(material == null) {
                 // invalid material name
                 return false;

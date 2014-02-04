@@ -24,7 +24,6 @@ public class ShopListExecutor extends ShopBaseCommandExecutor {
         // Success case; create list command parsed arguments.
         final ShopListExecutorArgs parsedArgs = new ShopListExecutorArgs();
         parsedArgs.sender = sender;
-        parsedArgs.commandtype = ShopCommandType.LIST;
 
         if(args.length == 2) {
             parsedArgs.item = args[1];

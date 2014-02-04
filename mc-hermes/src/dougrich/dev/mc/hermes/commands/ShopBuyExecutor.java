@@ -27,7 +27,6 @@ public class ShopBuyExecutor extends ShopBaseCommandExecutor {
         // Success case; create buy command parsed arguments and return.
         final ShopBuyExecutorArgs parsedArgs = new ShopBuyExecutorArgs();
         parsedArgs.sender = sender;
-        parsedArgs.commandtype = ShopCommandType.BUY;
         parsedArgs.item = args[1];
         parsedArgs.num = Integer.parseInt(args[2]);
         return parsedArgs;
@@ -50,13 +49,13 @@ public class ShopBuyExecutor extends ShopBaseCommandExecutor {
         // TODO: implement buy command.
         player.sendMessage("TODO: implement buy command");
 
-        final Material material = Material.getMaterial(args.item);
+        final Material material = Material.matchMaterial(args.item);
         if(material == null) {
             return false;
         }
 
         final int stacks = args.num / 64;
-        final ItemStack fullStack = new ItemStack(material, args.num / 64);
+        final ItemStack fullStack = new ItemStack(material, 64);
         final ItemStack remainderStack = new ItemStack(material, args.num % 64);
         for(int i = 0; i < stacks; i++) {
             player.getInventory().addItem(fullStack);

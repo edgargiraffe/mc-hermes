@@ -20,18 +20,12 @@ public class ShopPurseExecutor extends ShopBaseCommandExecutor {
         // Success case; create and return parsed arguments.
         final ShopExecutorArgs parsedArgs = new ShopExecutorArgs();
         parsedArgs.sender = sender;
-        parsedArgs.commandtype = ShopCommandType.PURSE;
         return parsedArgs;
     }
 
     protected boolean handleCommand(final ShopExecutorArgs e) {
         if(!(e.sender instanceof Player)) {
             // Server cannot send this command.
-            return false;
-        }
-
-        if(e.commandtype != ShopCommandType.PURSE) {
-            // These are not arguments for the PURSE command.
             return false;
         }
 
