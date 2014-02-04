@@ -10,7 +10,7 @@ public class ShopBuyExecutor extends ShopBaseCommandExecutor {
 
     protected class ShopBuyExecutorArgs extends ShopExecutorArgs {
         public String item;
-        public int num;
+        public int number;
     }
 
     protected ShopExecutorArgs tryGetArgs(final CommandSender sender, final Command cmd, final String label, final String[] args) {
@@ -28,7 +28,7 @@ public class ShopBuyExecutor extends ShopBaseCommandExecutor {
         final ShopBuyExecutorArgs parsedArgs = new ShopBuyExecutorArgs();
         parsedArgs.sender = sender;
         parsedArgs.item = args[1];
-        parsedArgs.num = Integer.parseInt(args[2]);
+        parsedArgs.number = Integer.parseInt(args[2]);
         return parsedArgs;
     }
 
@@ -54,9 +54,10 @@ public class ShopBuyExecutor extends ShopBaseCommandExecutor {
             return false;
         }
 
-        final int stacks = args.num / 64;
-        final ItemStack fullStack = new ItemStack(material, 64);
-        final ItemStack remainderStack = new ItemStack(material, args.num % 64);
+        final int stackSize = player.getInventory().getMaxStackSize();
+        final int stacks = args.number / stackSize;
+        final ItemStack fullStack = new ItemStack(material, stackSize);
+        final ItemStack remainderStack = new ItemStack(material, args.number % stackSize);
         for(int i = 0; i < stacks; i++) {
             player.getInventory().addItem(fullStack);
         }
